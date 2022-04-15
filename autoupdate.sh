@@ -16,7 +16,7 @@ function Debian() {
 
 function Rhel() {
 	echo $PREFIX >> ${LOG_FILE}
-	dnf -q update -y >> ${LOG_FILE}
+	dnf update -y >> ${LOG_FILE}
 	echo $SUFFIX >> ${LOG_FILE}
 }
 
