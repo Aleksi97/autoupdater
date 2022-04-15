@@ -20,7 +20,7 @@ function Rhel() {
 	echo -e $SUFFIX >> ${LOG_FILE}
 }
 
-if [[ -n "$DISTRO" ]] &&  [[ "${DISTRO}" == "-d" ]] ; then
+if [[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-d" ]] ; then
 	Debian
 elif [[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-r" ]] ; then
 	Rhel
