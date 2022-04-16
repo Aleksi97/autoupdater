@@ -30,7 +30,7 @@ function Error() {
 	exit 1
 }
 
-[[ -d ${LOG_DIR} ]] && mkdir ${LOG_DIR} && touch ${LOG_DIR}${LOG_FILE}
+[[ ! -d ${LOG_DIR} ]] && mkdir ${LOG_DIR} && touch ${LOG_DIR}${LOG_FILE}
 
 [[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-d" ]] && Debian
 [[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-r" ]] && Rhel
