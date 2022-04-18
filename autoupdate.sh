@@ -39,7 +39,9 @@ function Error() {
 
 [[ ! -d ${LOG_DIR} ]] && mkdir ${LOG_DIR} && touch ${LOG_DIR}${LOG_FILE}
 
-[[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-d" ]] && Debian
-[[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-r" ]] && Rhel
-[[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-os" ]] && OpenSuse
+[[ -z "$DISTRO" ]] && Error
+
+[[ "${DISTRO}" == "-d" ]] && Debian
+[[ "${DISTRO}" == "-r" ]] && Rhel
+[[ "${DISTRO}" == "-os" ]] && OpenSuse
 Error
