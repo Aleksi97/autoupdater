@@ -23,9 +23,16 @@ function Rhel() {
 	exit 1
 }
 
+function OpenSuse() {
+	echo -e $PREFIX >> ${LOG_DIR}${LOG_FILE}
+	sudo zypper refresh && sudo zypper update -y >> ${LOG_DIR}${LOG_FILE}
+	echo -e $SUFFIX >> ${LOG_DIR}${LOG_FILE}
+	exit 1
+}
+
 function Error() {
 	echo -e $PREFIX >> ${LOG_DIR}${LOG_FILE}
-	echo "Error: Invalid distro parameter" >> ${LOG_DIR}${LOG_FILE}
+	echo "Error: Invalid distro parameter or it wasn't given." >> ${LOG_DIR}${LOG_FILE}
 	echo -e $SUFFIX >> ${LOG_DIR}${LOG_FILE}
 	exit 1
 }
@@ -34,4 +41,5 @@ function Error() {
 
 [[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-d" ]] && Debian
 [[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-r" ]] && Rhel
+[[ -n "$DISTRO" ]] && [[ "${DISTRO}" == "-os" ]] && OpenSuse
 Error
