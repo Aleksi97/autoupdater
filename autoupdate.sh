@@ -1,43 +1,49 @@
 #! /bin/bash
 
-LOG_DIR="/var/log/cron/"
-LOG_FILE="autoupdate.log"
+LOG_DIRPATH="/var/log/cron/"
+LOG_FILENAME="autoupdate.log"
 DATETIME_STAMP=$(date +"%d.%m.%Y | %H:%M:%S")
 
+LOG=${LOG_DIRPATH}${LOG_FILENAME}
+
 PREFIX="---------------------------\n---${DATETIME_STAMP}---"
+UPDATE="\n***UPDATE***\n"
+UPGRADE="\n***UPGRADE***\n"
 SUFFIX="---------------------------\n"
 
 DISTRO=$1
 
 function Debian() {
-	echo -e $PREFIX >> ${LOG_DIR}${LOG_FILE}
-	apt-get -q update && apt-get -q upgrade -y >> ${LOG_DIR}${LOG_FILE}
-	echo -e $SUFFIX >> ${LOG_DIR}${LOG_FILE}
+	echo -e $PREFIX >> ${LOG}
+	echo -e $UPDATE >> ${LOG} && apt-get update >> ${LOG}
+	echo -e $UPGRADE >> ${LOG} && apt-get upgrade -y >> ${LOG}
+	echo -e $SUFFIX >> ${LOG}
 	exit 1
 }
 
 function Rhel() {
-	echo -e $PREFIX >> ${LOG_DIR}${LOG_FILE}
-	dnf update -y >> ${LOG_DIR}${LOG_FILE}
-	echo -e $SUFFIX >> ${LOG_DIR}${LOG_FILE}
+	echo -e $PREFIX >> ${LOG}
+	dnf update -y >> ${LOG}
+	echo -e $SUFFIX >> ${LOG}
 	exit 1
 }
 
 function OpenSuse() {
-	echo -e $PREFIX >> ${LOG_DIR}${LOG_FILE}
-	sudo zypper refresh && sudo zypper update -y >> ${LOG_DIR}${LOG_FILE}
-	echo -e $SUFFIX >> ${LOG_DIR}${LOG_FILE}
+	echo -e $PREFIX >> ${LOG}
+	echo -e $UPDATE >> ${LOG} && zypper refresh >> ${LOG}
+       	echo -e $UPGRADE >> ${LOG} && zypper update -y >> ${LOG}
+	echo -e $SUFFIX >> ${LOG}
 	exit 1
 }
 
 function Error() {
-	echo -e $PREFIX >> ${LOG_DIR}${LOG_FILE}
-	echo "Error: Invalid distro parameter or it wasn't given." >> ${LOG_DIR}${LOG_FILE}
-	echo -e $SUFFIX >> ${LOG_DIR}${LOG_FILE}
+	echo -e $PREFIX >> ${LOG}
+	echo "Error: Invalid distro parameter or it wasn't given." >> ${LOG}
+	echo -e $SUFFIX >> ${LOG}
 	exit 1
 }
 
-[[ ! -d ${LOG_DIR} ]] && mkdir ${LOG_DIR} && touch ${LOG_DIR}${LOG_FILE}
+[[ ! -d ${LOG_DIRPATH} ]] && mkdir ${LOG_DIRPATH} && touch ${LOG}
 
 [[ -z "$DISTRO" ]] && Error
 
