@@ -1,1 +1,2 @@
-# Simple updating shell script for Debian/RHEL/OpenSuse Linux distros or their derivatives.
+# Simple script to automate updates on Linux systems.
+Currently the script automatically recognizes the most popular Linux distros (excl. Arch) and uses the correct package manager to get the updates. Automation can be achieved using cron.

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-LOG_DIRPATH="/var/log/cron/"
+LOG_DIRPATH="/var/log/autoupdate/"
 LOG_FILENAME="autoupdate.log"
 DATETIME_STAMP=$(date +"%d.%m.%Y | %H:%M:%S")
 
@@ -11,9 +11,12 @@ UPDATE="\n***UPDATE***\n"
 UPGRADE="\n***UPGRADE***\n"
 SUFFIX="---------------------------\n"
 
-DISTRO=$1
+APT=("debian", "ubuntu", "linuxmint", "peppermint", "elementary", "zorin", "kali", "pop", "Deepin", "sparky", "devuan")
+DNF=("rhel", "fedora", "rocky", "centos", "almalinux", "ol", "mageia", "qubes", "eurolinux", "openmandriva", "openmamba")
+ZYPPER="opensuse"
+DISTRO="$(. /etc/os-release; echo "$ID")"
 
-function Debian() {
+function Apt() {
 	echo -e $PREFIX >> ${LOG}
 	echo -e $UPDATE >> ${LOG} && apt-get update >> ${LOG}
 	echo -e $UPGRADE >> ${LOG} && apt-get upgrade -y >> ${LOG}
@@ -21,7 +24,7 @@ function Debian() {
 	exit 1
 }
 
-function Rhel() {
+function Dnf() {
 	echo -e $PREFIX >> ${LOG}
 	echo "\n***UPDATES AND UPGRADES***\n" >> ${LOG}
 	dnf update -y >> ${LOG}
@@ -29,7 +32,7 @@ function Rhel() {
 	exit 1
 }
 
-function OpenSuse() {
+function Zypper() {
 	echo -e $PREFIX >> ${LOG}
 	echo -e $UPDATE >> ${LOG} && zypper refresh >> ${LOG}
        	echo -e $UPGRADE >> ${LOG} && zypper update -y >> ${LOG}
@@ -39,16 +42,14 @@ function OpenSuse() {
 
 function Error() {
 	echo -e $PREFIX >> ${LOG}
-	echo "Error: Invalid distro argument or it wasn't given." >> ${LOG}
+	echo "Error: Distro not recognized" >> ${LOG}
 	echo -e $SUFFIX >> ${LOG}
 	exit 1
 }
 
 [[ ! -d ${LOG_DIRPATH} ]] && mkdir ${LOG_DIRPATH} && touch ${LOG}
 
-[[ -z "$DISTRO" ]] && Error
-
-[[ "${DISTRO}" == "-d" ]] && Debian
-[[ "${DISTRO}" == "-r" ]] && Rhel
-[[ "${DISTRO}" == "-os" ]] && OpenSuse
+[[ "${APT[*]}" =~ "${DISTRO}" ]] && Apt
+[[ "${DNF[*]}" =~ "${DISTRO}" ]] && Dnf
+[[ "${DISTRO}" == *"$ZYPPER}"* ]] && Zypper
 Error
