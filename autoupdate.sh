@@ -23,6 +23,7 @@ function Debian() {
 
 function Rhel() {
 	echo -e $PREFIX >> ${LOG}
+	echo "\n***UPDATES AND UPGRADES***\n" >> ${LOG}
 	dnf update -y >> ${LOG}
 	echo -e $SUFFIX >> ${LOG}
 	exit 1
@@ -38,7 +39,7 @@ function OpenSuse() {
 
 function Error() {
 	echo -e $PREFIX >> ${LOG}
-	echo "Error: Invalid distro parameter or it wasn't given." >> ${LOG}
+	echo "Error: Invalid distro argument or it wasn't given." >> ${LOG}
 	echo -e $SUFFIX >> ${LOG}
 	exit 1
 }
