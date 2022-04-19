@@ -51,5 +51,5 @@ function Error() {
 
 [[ "${APT[*]}" =~ "${DISTRO}" ]] && Apt
 [[ "${DNF[*]}" =~ "${DISTRO}" ]] && Dnf
-[[ "${DISTRO}" == *"$ZYPPER}"* ]] && Zypper
+[[ "${DISTRO}" == *"${ZYPPER}"* ]] && Zypper
 Error
