@@ -26,7 +26,7 @@ function Apt() {
 
 function Dnf() {
 	echo -e $PREFIX >> ${LOG}
-	echo "\n***UPDATES AND UPGRADES***\n" >> ${LOG}
+	echo -e "\n***UPDATES AND UPGRADES***\n" >> ${LOG}
 	dnf update -y >> ${LOG}
 	echo -e $SUFFIX >> ${LOG}
 	exit 1
