@@ -13,6 +13,7 @@ SUFFIX="---------------------------\n"
 
 APT=("debian", "ubuntu", "linuxmint", "peppermint", "elementary", "zorin", "kali", "pop", "Deepin", "sparky", "devuan")
 DNF=("rhel", "fedora", "rocky", "centos", "almalinux", "ol", "mageia", "qubes", "eurolinux", "openmandriva", "openmamba")
+PACMAN=("arch", "endeavouros", "manjaro", "garuda", "arcolinux", "artix", "RebornOS", "Salient OS", "blackarch", "archcraft", "archman", "sysrescue", "ArchLabs", "hyperbola", "obarun")
 ZYPPER="opensuse"
 DISTRO="$(. /etc/os-release; echo "$ID")"
 
@@ -40,6 +41,14 @@ function Zypper() {
 	exit 1
 }
 
+function Pacman() {
+	echo -e $PREFIX >> ${LOG}
+	echo -e "\n***UPDATES AND UPGRADES***\n" >> ${LOG}
+	pacman -Syu --noconfirm >> ${LOG}
+	echo -e $SUFFIX >> ${LOG}
+	exit 1
+}
+
 function Error() {
 	echo -e $PREFIX >> ${LOG}
 	echo "Error: Distro not recognized" >> ${LOG}
@@ -51,5 +60,6 @@ function Error() {
 
 [[ "${APT[*]}" =~ "${DISTRO}" ]] && Apt
 [[ "${DNF[*]}" =~ "${DISTRO}" ]] && Dnf
+[[ "${PACMAN[*]}" =~ "${DISTRO}" ]] && Pacman
 [[ "${DISTRO}" == *"${ZYPPER}"* ]] && Zypper
 Error
