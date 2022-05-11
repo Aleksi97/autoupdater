@@ -1,5 +1,7 @@
 #! /bin/bash
 
+#VERSION: 2.0.0
+
 LOG_DIRPATH="/var/log/autoupdate/"
 LOG_FILENAME="autoupdate.log"
 DATETIME_STAMP=$(date +"%d.%m.%Y | %H:%M:%S")
@@ -11,7 +13,7 @@ UPDATE="\n***UPDATE***\n"
 UPGRADE="\n***UPGRADE***\n"
 SUFFIX="---------------------------\n"
 
-APT=("debian", "ubuntu", "linuxmint", "peppermint", "elementary", "zorin", "kali", "pop", "Deepin", "sparky", "devuan")
+APT=("debian", "ubuntu", "linuxmint", "peppermint", "elementary", "zorin", "kali", "pop", "Deepin", "sparky", "devuan", "neon", "nitrux", "pureos", "parrot", "neptune", "trisquel", "kaisen")
 DNF=("rhel", "fedora", "rocky", "centos", "almalinux", "ol", "mageia", "qubes", "eurolinux", "openmandriva", "openmamba")
 PACMAN=("arch", "endeavouros", "manjaro", "garuda", "arcolinux", "artix", "RebornOS", "Salient OS", "blackarch", "archcraft", "archman", "sysrescue", "ArchLabs", "hyperbola", "obarun")
 ZYPPER="opensuse"
